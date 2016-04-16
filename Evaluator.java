@@ -200,7 +200,7 @@ public class Evaluator {
 		ArrayList<File> theFiles = new ArrayList<File>();
 		theFiles.add(new File("singPerson.txt"));
 		theFiles.add(new File("plurPerson.txt"));
-		theFiles.add(new File("singObject"));
+		theFiles.add(new File("singObject.txt"));
 		theFiles.add(new File("plurObject.txt"));
 		theFiles.add(new File("presentVerb.txt"));
 		theFiles.add(new File("pastVerb.txt"));
@@ -208,8 +208,14 @@ public class Evaluator {
 		Encyclopedia poop = new Encyclopedia(theFiles);
 		Evaluator eval = new Evaluator(poop);
 		ArrayList<String> sent = new ArrayList<String>();
-		sent.add("they");
-		sent.add("cheer");
+		sent.add("nurry");
+		sent.add("and");
+		sent.add("lucy");
+		sent.add("really");
+
+		sent.add("like");
+
+		sent.add("cooking");
 		ArrayList<ArrayList<Association<String, String>>> me = eval.evaluate(sent);
 		for (int i = 0; i < me.size(); i++) {
 			System.out.println(me.get(i));
