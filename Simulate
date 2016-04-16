@@ -1,0 +1,76 @@
+package EnglishTeacher;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import structure5.Association;
+
+public class Simulate {
+	
+	Encyclopedia enco;
+	File story;
+	ArrayList<ArrayList<String>> parsedBook;
+	ArrayList<ArrayList<Association<String,String>>> analyzedData;
+	Evaluator eval;
+	QuestionGenerator hooray;
+
+	public Simulate(ArrayList<File> lexicons, File story){
+		enco = new Encyclopedia(lexicons);
+		this.story = story;
+		parsedBook = (new FileParser()).parseFile(story);
+		//System.out.println(parsedBook);
+		analyzedData = new ArrayList<ArrayList<Association<String,String>>>();
+		
+		for(int i =0; i< parsedBook.size();i++){
+			System.out.println((new Evaluator(enco)).evaluate(parsedBook.get(i)));
+			analyzedData.addAll((new Evaluator(enco)).evaluate(parsedBook.get(i)));
+		}
+		hooray = new QuestionGenerator(analyzedData);
+	}
+	
+	public Simulate(){
+		ArrayList<File> theFiles = new ArrayList<File>();
+		theFiles.add(new File("singPerson.txt"));
+		theFiles.add(new File("plurPerson.txt"));
+		theFiles.add(new File("singObject.txt"));
+		theFiles.add(new File("plurObject.txt"));
+		theFiles.add(new File("presentVerb.txt"));
+		theFiles.add(new File("pastVerb.txt"));
+		theFiles.add(new File("conjunction.txt"));
+		enco = new Encyclopedia(theFiles);
+		this.story = new File("RedHen.txt");
+		parsedBook = (new FileParser()).parseFile(story);
+		System.out.println(parsedBook);
+		analyzedData = new ArrayList<ArrayList<Association<String,String>>>();
+		
+		for(int i =0; i< parsedBook.size();i++){
+			System.out.println((new Evaluator(enco)).evaluate(parsedBook.get(i)));
+			analyzedData.addAll((new Evaluator(enco)).evaluate(parsedBook.get(i)));
+		}
+		hooray = new QuestionGenerator(analyzedData);
+	}
+	
+	public Association<String,String> generate(){
+		return hooray.newQuestion();
+				}
+	
+	
+	
+	static public void main(String[] args){
+		ArrayList<File> theFiles = new ArrayList<File>();
+		theFiles.add(new File("singPerson.txt"));
+		theFiles.add(new File("plurPerson.txt"));
+		theFiles.add(new File("singObject.txt"));
+		theFiles.add(new File("plurObject.txt"));
+		theFiles.add(new File("presentVerb.txt"));
+		theFiles.add(new File("pastVerb.txt"));
+		theFiles.add(new File("conjunction.txt"));
+		Simulate everything = new Simulate(theFiles, new File("RedHen.txt"));
+		
+		for(int i=0; i<5; i++){
+			Association<String, String> questionAnswer = everything.generate();
+			System.out.println("Question: "+questionAnswer.getKey());
+			System.out.println("Answer: "+questionAnswer.getValue());
+		}
+	}
+}
