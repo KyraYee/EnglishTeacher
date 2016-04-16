@@ -1,3 +1,5 @@
+package EnglishTeacher;
+
 import java.io.*;
 import java.util.*;
 
@@ -26,9 +28,15 @@ public class WordParser {
 		String currentWord = "";
 		for (int i = 0; i < sentence.size(); i++) {
 			currChar = sentence.get(i);
-			if (currChar == ' ' || i + 1 == sentence.size()) {
+			if (currChar == ' ' || i==sentence.size()-1) {
 				ArrayList<Character> collectList = new ArrayList<Character>();
-				for (int k = last; k <= i; k++) {
+				int end;
+				if(i!=sentence.size()-1){
+					end = i;
+				} else{
+					end = i+1;
+				}
+				for (int k = last; k < end; k++) {
 					collectList.add(sentence.get(k));
 				}
 				currentWord = getString(collectList);
@@ -37,22 +45,22 @@ public class WordParser {
 				last = i + 1;
 			}
 		}
-		
-		for(int r = 0; r < returnMe.size(); r++) {
-			  returnMe.set(r, returnMe.get(r).toLowerCase());
-			}
-		
+
+		for (int r = 0; r < returnMe.size(); r++) {
+			returnMe.set(r, returnMe.get(r).toLowerCase());
+		}
+
 		return returnMe;
 	}
 
-	
 	public static void main(String[] args) {
 
-		/*File tester = new File("test.txt");
-		SentenceParser testParser = new SentenceParser(tester);
-		ArrayList<ArrayList<Character>> output = testParser.parser(tester);
-		WordParser wordTest = new WordParser(output);
-
-		System.out.println(wordTest.sentenceParser(output.get(0)));*/
+		/*
+		 * File tester = new File("test.txt"); SentenceParser testParser = new
+		 * SentenceParser(tester); ArrayList<ArrayList<Character>> output =
+		 * testParser.parser(tester); WordParser wordTest = new
+		 * WordParser(output);
+		 * System.out.println(wordTest.sentenceParser(output.get(0)));
+		 */
 	}
 }
