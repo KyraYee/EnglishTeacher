@@ -1,24 +1,37 @@
+package EnglishTeacher;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import objectdraw.*;
+import structure5.Association;
 
 
 public class UserPage extends WindowController implements ActionListener {
 
+	Association<String, String> questionAnswer;
 	private JLabel textLabel;
 	private JTextField input;
 	private JLabel questionLabel;
 	private JLabel answerLabel;
 	private JButton newQuestion;
+	private String a;
 	
 	private String answer = "";
 	private String question = "";
 	private String newQ = "Generate a new question";
+	private Simulate sim;
+	
 	
 	public void begin (){
+	//public static void main( String[] args){
+		
+	sim = new Simulate();
 		String b = "Question: " + question;
-		String a = "Answer: " + answer;
+		a = "Answer: " + answer;
 		
 		
 		//JPanel with 3 rows and 1 column
@@ -48,9 +61,14 @@ public class UserPage extends WindowController implements ActionListener {
 
 	public void actionPerformed (ActionEvent event) {
         if (event.getSource() == input){
-        	
+        	String userAnswer= input.getText();
+        	if( userAnswer.contains(questionAnswer.getValue())){
+        		answer="correct";
+        		answerLabel.setText(a);
+        	}
         } else if (event.getSource() == newQuestion){
-        	
+        	questionAnswer = sim.generate();
+        	questionLabel.setText(questionAnswer.getKey());
         }
     }
 
