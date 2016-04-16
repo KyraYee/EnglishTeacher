@@ -46,7 +46,7 @@ public class QuestionGenerator {
 		return verb;
 	}
 
-	public String newQuestion() {
+	public Association<String,String> newQuestion() {
 		String newQuestion = "";
 		String answer= "";
 		// gives a random sentence, represented by an ArrayList of characters
@@ -148,12 +148,12 @@ public class QuestionGenerator {
 		
 		System.out.println("question="+newQuestion);
 		System.out.println("answer="+answer);
-		return newQuestion;
+		return new Association <String,String>(newQuestion,answer);
 	}
 	public static void main(String[] args) {
 		Association<String, String> she = new Association<String,String> (new String ("plurPerson"), new String("nurry"));
-		Association<String, String> cooks = new Association<String,String> (new String ("pastVerb"), new String("cooked"));
-		Association<String, String> food = new Association<String,String> (new String ("singObject"), new String("food"));
+		Association<String, String> cooks = new Association<String,String> (new String ("pastVerb"), new String("screamed"));
+		Association<String, String> food = new Association<String,String> (new String ("plurObject"), new String("bananas"));
 		
 		ArrayList<Association<String, String>> sentence1 = new ArrayList<Association<String, String>>();
 		sentence1.add(she);
