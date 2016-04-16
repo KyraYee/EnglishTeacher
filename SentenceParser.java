@@ -1,3 +1,5 @@
+package EnglishTeacher;
+
 import java.io.*;
 import java.util.*;
 
@@ -32,8 +34,8 @@ public class SentenceParser {
 						last = i+2;
 					}
 				}
-				System.out.println(list);
-				System.out.println(s);
+				//System.out.println(list);
+				//System.out.println(s);
 				s = buffer.readLine();
 			} 
 		}catch (IOException e) {
@@ -42,12 +44,10 @@ public class SentenceParser {
 			return list;
 	}
 	
-	public static void main (String[] args){
+	/*public static void main (String[] args){
 		File tester = new File ("test.txt");
 		SentenceParser testParser = new SentenceParser (tester);
 		testParser.parser(tester);
-	}
+	}*/
 	
 }
-	
-
