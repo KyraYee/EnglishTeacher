@@ -13,6 +13,7 @@ public class QuestionGenerator {
 	Lexicon properNouns;
 
 	public QuestionGenerator( ArrayList<ArrayList<Association<String, String>>> parsedSentences) {
+		System.out.println("PARSED SENTENCES="+ parsedSentences);
 		this.parsedSentences = parsedSentences;
 		random = new Random();
 		this.properNouns=properNouns;
@@ -51,7 +52,7 @@ public class QuestionGenerator {
 		String answer= "";
 		// gives a random sentence, represented by an ArrayList of characters
 		ArrayList<Association<String, String>> curSentence = parsedSentences
-				.get(random.nextInt(parsedSentences.size()));
+				.get(random.nextInt(parsedSentences.size()-1));
 		//ArrayList<Association<String, String>> curSentence = parsedSentences.get(0);
 		int sentenceLength = curSentence.size();
 	
@@ -113,14 +114,14 @@ public class QuestionGenerator {
 		
 		//no object
 		else if(sentenceLength==2){
-			System.out.println("test");
+			//System.out.println("test");
 			//past tense
 			 if (curSentence.get(1).getKey().contains(("pastVerb"))){
 				newQuestion= "What did "+curSentence.get(0).getValue()+" do" +"?";
 			}
 			
 			 else if (curSentence.get(1).getKey().contains(("presentVerb"))){
-				 System.out.println("test1");
+				// System.out.println("test1");
 			//singular subject
 			if (curSentence.get(0).getKey().contains("sing")){
 				newQuestion= "What does "+curSentence.get(0).getValue()+" do"+"?";
@@ -146,8 +147,8 @@ public class QuestionGenerator {
 			answer=answer.replace("lucy", "Lucy");
 		}
 		
-		System.out.println("question="+newQuestion);
-		System.out.println("answer="+answer);
+		//System.out.println("question="+newQuestion);
+		//System.out.println("answer="+answer);
 		return new Association <String,String>(newQuestion,answer);
 	}
 	public static void main(String[] args) {
