@@ -1,0 +1,177 @@
+package EnglishTeacher;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import structure5.Association;
+
+public class QuestionGenerator {
+	// it is type, string
+	//key, value
+	ArrayList<ArrayList<Association<String, String>>> parsedSentences;
+	Random random;
+	Lexicon properNouns;
+
+	public QuestionGenerator( ArrayList<ArrayList<Association<String, String>>> parsedSentences) {
+		this.parsedSentences = parsedSentences;
+		random = new Random();
+		this.properNouns=properNouns;
+	}
+
+	
+	private ArrayList<ArrayList<Association<String, String>>> giveParsedS(){
+		return parsedSentences;
+	}
+	/**
+	 * does not work for verbs that end in s dances to dance likes to like
+	 * 
+	 * @param verb
+	 * @return
+	 */
+	public String verbToPlural(String verb) {
+		if (verb.charAt(verb.length() - 1) == 's') {
+			verb = verb.substring(0, verb.length() - 1);
+		}
+		return verb;
+	}
+
+	/**
+	 * does not work for verbs that end in ed or e or d rained to rain cleaned
+	 * to clean
+	 */
+	public String verbToPresent(String verb) {
+		if (verb.charAt(verb.length() - 1) == 'd' && verb.charAt(verb.length() - 2) == 'e') {
+			verb = verb.substring(0, verb.length() - 2);
+		}
+		return verb;
+	}
+
+	public String newQuestion() {
+		String newQuestion = "";
+		String answer= "";
+		// gives a random sentence, represented by an ArrayList of characters
+		ArrayList<Association<String, String>> curSentence = parsedSentences
+				.get(random.nextInt(parsedSentences.size()));
+		//ArrayList<Association<String, String>> curSentence = parsedSentences.get(0);
+		int sentenceLength = curSentence.size();
+	
+		//sentence length 3
+		if (sentenceLength==3){
+			//present
+			if(curSentence.get(1).getKey().contains("presentVerb")){
+				//noun singular person
+				if(curSentence.get(0).getKey().contains("singPerson")){
+					//object person
+					if (curSentence.get(2).getKey().contains("Person")){
+						newQuestion= "Who does "+curSentence.get(0).getValue() + " "+ verbToPlural(curSentence.get(1).getValue()) + "?";
+					}
+					else if (curSentence.get(2).getKey().contains("Object")){
+						newQuestion= "What does "+curSentence.get(0).getValue() +" "+ verbToPlural(curSentence.get(1).getValue()) + "?";
+					}
+					
+				}
+				//noun plural person
+				else if (curSentence.get(0).getKey().contains("plurPerson")){
+					//object person
+					if (curSentence.get(2).getKey().contains("Person")){
+						newQuestion= "Who do "+curSentence.get(0).getValue() + " "+verbToPlural(curSentence.get(1).getValue()) + "?";
+					}
+					else if (curSentence.get(2).getKey().contains("Object")){
+						newQuestion= "What do "+curSentence.get(0).getValue() +" "+ verbToPlural(curSentence.get(1).getValue()) + "?";
+					}
+					}
+				
+						
+				}
+			//past
+			else if(curSentence.get(1).getKey().contains("pastVerb")){
+				//noun singular person
+				if(curSentence.get(0).getKey() == "singPerson"){
+					//object person
+					if (curSentence.get(2).getKey().contains("Person")){
+						newQuestion= "Who did "+curSentence.get(0).getValue() +" "+ verbToPresent(curSentence.get(1).getValue()) + "?";
+					}
+					else if (curSentence.get(2).getKey().contains("Object")){
+						newQuestion= "What did "+curSentence.get(0).getValue() +" "+ verbToPresent(curSentence.get(1).getValue()) + "?";
+					}
+					
+				}
+				//noun plural person
+				else if (curSentence.get(0).getKey().contains("plurPerson")){
+					//object person
+					if (curSentence.get(2).getKey().contains("Person")){
+						newQuestion= "Who did "+curSentence.get(0).getValue() +" "+ verbToPresent(curSentence.get(1).getValue()) + "?";
+					}
+					else if (curSentence.get(2).getKey().contains("Object")){
+						newQuestion= "What did "+curSentence.get(0).getValue() +" "+ verbToPresent(curSentence.get(1).getValue()) + "?";
+					}
+					}
+						
+				}
+			answer= curSentence.get(2).getValue();
+		}
+		
+		//no object
+		else if(sentenceLength==2){
+			System.out.println("test");
+			//past tense
+			 if (curSentence.get(1).getKey().contains(("pastVerb"))){
+				newQuestion= "What did "+curSentence.get(0).getValue()+" do" +"?";
+			}
+			
+			 else if (curSentence.get(1).getKey().contains(("presentVerb"))){
+				 System.out.println("test1");
+			//singular subject
+			if (curSentence.get(0).getKey().contains("sing")){
+				newQuestion= "What does "+curSentence.get(0).getValue()+" do"+"?";
+		}
+			else if (curSentence.get(0).getKey().contains("plur")){
+				newQuestion= "What do "+curSentence.get(0).getValue()+" do"+"?";
+			}
+		}
+			 answer= curSentence.get(1).getValue();
+		}
+		
+		
+		if (newQuestion.contains("nurry")){
+		newQuestion=newQuestion.replace("nurry", "Nurry");
+		}
+		if (newQuestion.contains("lucy")){
+			newQuestion=newQuestion.replace("lucy", "Lucy");
+		}
+		if (answer.contains("nurry")){
+			answer=answer.replace("nurry", "Nurry");
+		}
+		if(answer.contains("lucy")){
+			answer=answer.replace("lucy", "Lucy");
+		}
+		
+		System.out.println("question="+newQuestion);
+		System.out.println("answer="+answer);
+		return newQuestion;
+	}
+	public static void main(String[] args) {
+		Association<String, String> she = new Association<String,String> (new String ("plurPerson"), new String("nurry"));
+		Association<String, String> cooks = new Association<String,String> (new String ("pastVerb"), new String("cooked"));
+		Association<String, String> food = new Association<String,String> (new String ("singObject"), new String("food"));
+		
+		ArrayList<Association<String, String>> sentence1 = new ArrayList<Association<String, String>>();
+		sentence1.add(she);
+		sentence1.add(cooks);
+		sentence1.add(food);
+		ArrayList<ArrayList<Association<String, String>>> sentences = new ArrayList<ArrayList<Association<String, String>>>();
+		sentences.add(sentence1);
+		
+		QuestionGenerator gen = new QuestionGenerator(sentences);
+		System.out.println(gen);
+		System.out.println(sentences);
+		System.out.println(gen.giveParsedS().size());
+		System.out.println(sentence1.get(1).getKey().contains("presentVerb"));
+		String test= "able";
+		
+		
+		gen.newQuestion();
+		
+	}
+	
+}
