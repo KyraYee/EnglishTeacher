@@ -37,6 +37,11 @@ public class WordParser {
 				last = i + 1;
 			}
 		}
+		
+		for(int r = 0; r < returnMe.size(); r++) {
+			  returnMe.set(r, returnMe.get(r).toLowerCase());
+			}
+		
 		return returnMe;
 	}
 
